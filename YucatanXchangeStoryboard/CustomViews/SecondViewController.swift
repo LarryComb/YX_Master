@@ -7,24 +7,26 @@
 
 import Foundation
 import SwiftUI
-import Firebase
+import FirebaseDatabase
+
 
 
 
 class SecondViewController: UIViewController {
     
    
+    var databaseRef: DatabaseReference?
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        databaseRef = Database.database().reference()
+        databaseRef?.observe(.childAdded) { (snapshot) in
+            print("\(snapshot.key):\(snapshot.value!)")
+        }
+    }
     
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -39,7 +41,7 @@ class SecondViewController: UIViewController {
 }
 */
 
-/*
+
 struct SecondViewController: View {
     @Binding var showSelf: Bool
 
@@ -67,4 +69,6 @@ struct SecondViewController: View {
    
         
     }
-}*/
+}
+
+
