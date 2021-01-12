@@ -23,4 +23,14 @@ pod 'Firebase/Core'
 # Add the pod for Firebase Database 
 pod 'Firebase/Database'
 
+# Add the pod for codableFirebase
+  pod 'CodableFirebase'
+
+# Add the pod for Firebase Store
+  pod 'Firebase/Firestore'
+
+# Add the pod for Firebase FirestoreSwift
+  pod 'FirebaseFirestoreSwift'
+
+
 end
