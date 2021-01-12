@@ -47,7 +47,7 @@ struct SecondViewController: View {
                 Color.backgroundColorList.edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                 
                 VStack(alignment: .leading) {
-                    Text("DataTable rows")
+                    Text("")
                     Spacer()
                     List {
                         ForEach(dataTableStore.messages, id: \.self) { message in
@@ -61,6 +61,7 @@ struct SecondViewController: View {
                 }
                 .background(Color.backgroundColorList)
                 .navigationBarTitle("Notifications", displayMode: .inline)
+                //.navigationBarItems(leading: btnBack)
                 //.navigationBarHidden(true)
                 .foregroundColor(Color.textColorPrimary)
                 .background(Color.backgroundColorList)
