@@ -74,39 +74,38 @@ struct CustomViews: View {
     }
     
     var body: some View {
-        
-        VStack(spacing: 0) {
-            UIViewWrapper(view: webView)
-            HStack(spacing: 20) {
-                if toolbar.loading { // if it's loading, only the loading spinner will be shown
-                    Spacer()
-                    UIViewWrapper(view: spinner)
-                    Spacer()
-                } else { // if it's not loading, we show a back button and the Save and Load button`
-//                    Button(action: back) {
-//                        Image(systemName: "tray.fill")
-//                   }
-//                    Spacer()
-//                    Button("Save", action: archive)
-//                    Button("Load", action: unarchive)
-                    
-                    Button(action: back){
-                            
+        NavigationView {
+            VStack(spacing: 0) {
+                UIViewWrapper(view: webView)
+                HStack(spacing: 20) {
+                    if toolbar.loading { // if it's loading, only the loading spinner will be shown
+                        Spacer()
+                        UIViewWrapper(view: spinner)
+                        Spacer()
+                    } else { // if it's not loading, we show a back button and the Save and Load button`
+    //                    Button(action: back) {
+    //                        Image(systemName: "tray.fill")
+    //                   }
+    //                    Spacer()
+    //                    Button("Save", action: archive)
+    //                    Button("Load", action: unarchive)
+                        NavigationLink(
+                            destination: SecondViewController(), isActive: $showDetail){
+                        }
+                        Button(action: back){
                             Image(systemName: "tray.fill")
-
-                    }.fullScreenCover(isPresented: $showDetail, content: {
-                        SecondViewController(showSelf: $showDetail)
-                    })
-                    Spacer()
-                    Button("Save", action: archive)
-                    Button("Load", action: unarchive)
+                        }
+                        Spacer()
+                        Button("Save", action: archive)
+                        Button("Load", action: unarchive)
 
 
-                }
-            }.padding().frame(height:40.0).background(Color(white:0.9))
-        }.alert(item: $popup) { p in
-            Alert(title: Text(p.message))
-        }
+                    }
+                }.padding().frame(height:40.0).background(Color(white:0.9))
+            }.alert(item: $popup) { p in
+                Alert(title: Text(p.message))
+            }
+        }  
     }
     
 

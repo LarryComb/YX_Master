@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
- platform :ios, '9.0'
+ #platform :ios, '9.0'
 
 target 'YucatanXchangeStoryboard' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -32,5 +32,7 @@ pod 'Firebase/Database'
 # Add the pod for Firebase FirestoreSwift
   pod 'FirebaseFirestoreSwift'
 
+# Add the pod for ActivityIndocator
+ pod 'ActivityIndicatorView'
 
 end

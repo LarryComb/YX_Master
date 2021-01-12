@@ -8,20 +8,37 @@
 import Foundation
 import SwiftUI
 import FirebaseDatabase
+import ActivityIndicatorView
 
-
-
-struct ContentView: View {
+struct SecondViewController: View {
     @ObservedObject var dataTableStore = DataTableStore()
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    @GestureState private var dragOffset = CGSize.zero
     
     init() {
         UINavigationBar.appearance().barTintColor = UIColor(named: "colorPrimary")
         UINavigationBar.appearance().backgroundColor = UIColor(named: "colorPrimary")
         UITableView.appearance().backgroundColor = UIColor(named: "backgroundColorList")
+        UITextView.appearance().backgroundColor = .clear
+        UIScrollView.appearance().bounces = true
     }
     
     func fetchDataTableData () {
         dataTableStore.listenDataTables()
+    }
+    
+    var btnBack : some View
+    { Button(action: {
+        self.mode.wrappedValue.dismiss()
+    })
+    {
+        HStack {
+            Image(systemName: "chevron.left") // set image here
+                .aspectRatio(contentMode: .fit)
+                .foregroundColor(Color.textColorPrimary)
+            Text("FashionBot").foregroundColor(Color.textColorPrimary)
+        }
+    }
     }
     
     var body: some View {
@@ -43,12 +60,17 @@ struct ContentView: View {
                     .listStyle(PlainListStyle())
                 }
                 .background(Color.backgroundColorList)
-                .navigationBarTitle("", displayMode: .inline)
-                .navigationBarItems(
-                    leading:
-                        Text("DataTable"))
-                .navigationBarBackButtonHidden(true)
+                .navigationBarTitle("Notifications", displayMode: .inline)
+                //.navigationBarHidden(true)
                 .foregroundColor(Color.textColorPrimary)
+                .background(Color.backgroundColorList)
+                .onAppear(perform: fetchDataTableData)
+                .navigationViewStyle(StackNavigationViewStyle())
+                .gesture(DragGesture().updating($dragOffset, body: { (value, state, transaction) in
+                    if(value.startLocation.x < 20 && value.translation.width > 100) {
+                        self.mode.wrappedValue.dismiss()
+                    }
+                }))
                 
                 ActivityIndicatorView(isVisible: $dataTableStore.loading, type: .scalingDots)
                     .frame(width: 50, height: 50)
@@ -56,9 +78,6 @@ struct ContentView: View {
                     .padding(10)
             }
         }
-        .background(Color.backgroundColorList)
-        .onAppear(perform: fetchDataTableData)
-        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
@@ -71,70 +90,3 @@ struct ContentView: View {
 
 
 
-
-
-
-/*
-
- class SecondViewController: UIViewController {
-    
-   
-    var databaseRef: DatabaseReference?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        databaseRef = Database.database().reference()
-        databaseRef?.observe(.childAdded) { (snapshot) in
-            print("\(snapshot.key):\(snapshot.value!)")
-        }
-    }
-    
-}
-
-*/
-/*
-
- class SecondViewController: UIViewController {
-
-    override func viewDidLoad(){
-      super.viewDidLoad()
-        view.backgroundColor = .systemBlue
-      title = "Notifications"
-    }
-}
-
-*/
-
-
-/*
-struct SecondViewController: View {
-    @Binding var showSelf: Bool
-
-    var body: some View {
-        
-
-        VStack {
-            
-            Button(action: {
-                self.showSelf = false
-            }) {
-                Text("go back")
-            }
-            
-            List {
-                Text("row 1")
-                Text("row 2")
-                Text("row 4")
-                Text("row 5")
-                Text("row 6")
-                Text("row 7")
-                Text("row 8")
-            }
-        }
-   
-        
-    }
-}
-
-*/
