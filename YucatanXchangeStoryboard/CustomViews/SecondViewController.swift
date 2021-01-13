@@ -11,7 +11,7 @@ import FirebaseDatabase
 import ActivityIndicatorView
 
 struct SecondViewController: View {
-    @ObservedObject var dataTableStore = DataTableStore()
+    @ObservedObject var dataTableStore = NotificationStore()
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     @GestureState private var dragOffset = CGSize.zero
     
@@ -36,7 +36,7 @@ struct SecondViewController: View {
             Image(systemName: "chevron.left") // set image here
                 .aspectRatio(contentMode: .fit)
                 .foregroundColor(Color.textColorPrimary)
-            Text("FashionBot").foregroundColor(Color.textColorPrimary)
+            Text("YucatanXchange").foregroundColor(Color.textColorPrimary)
         }
     }
     }
@@ -50,8 +50,8 @@ struct SecondViewController: View {
                     Text("")
                     Spacer()
                     List {
-                        ForEach(dataTableStore.messages, id: \.self) { message in
-                            DataTableItemView(message: message)
+                        ForEach(dataTableStore.notifications, id: \.self) { notificationData in
+                            DataTableItemView(notificationData: notificationData)
                         }
                         .listRowBackground(Color.backgroundColorList)
                         .foregroundColor(Color.textColorSecondary)

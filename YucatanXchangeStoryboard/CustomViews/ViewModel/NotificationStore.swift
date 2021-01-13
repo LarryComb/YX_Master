@@ -13,34 +13,34 @@ import FirebaseFirestoreSwift
 import CodableFirebase
 import FirebaseFirestore
 
-class DataTableStore : ObservableObject {
-    static let TABLE_NAME = "DataTable"
+class NotificationStore : ObservableObject {
+    static let TABLE_NAME = "Notifications"
     
     let db = Firestore.firestore()
-    var didChange = PassthroughSubject<DataTableStore, Never>()
+    var didChange = PassthroughSubject<NotificationStore, Never>()
     
     @Published var loading = true
-    @Published var messages: [Message] = [] {
+    @Published var notifications: [NotificationData] = [] {
         didSet { self.didChange.send(self) }
     }
     
-    init(messages: [Message] = []) {
-        self.messages = messages
+    init(notifications: [NotificationData] = []) {
+        self.notifications = notifications
     }
     
     func listenDataTables(){
-        db.collection(DataTableStore.TABLE_NAME).addSnapshotListener { querySnapshot, error in
+        db.collection(NotificationStore.TABLE_NAME).addSnapshotListener { querySnapshot, error in
             guard let snapshot = querySnapshot else {
                 print("Error fetching snapshots: \(error!)")
                 return
             }
             
             do {
-                self.messages.removeAll()
+                self.notifications.removeAll()
                 try snapshot.documents.forEach { document in
-                    let message = try document.data(as: Message.self)
+                    let message = try document.data(as: NotificationData.self)
                     if(nil != message){
-                        self.messages.append(message!)
+                        self.notifications.append(message!)
                     }
                 }
                 

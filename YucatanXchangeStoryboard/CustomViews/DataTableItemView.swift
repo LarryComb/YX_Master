@@ -10,12 +10,12 @@ import Foundation
 import SwiftUI
 
 struct DataTableItemView: View {
-    var message: Message
+    var notificationData: NotificationData
     
     var body: some View {
         HStack(spacing: 5)
         {
-            Text(message.message).frame(maxWidth: .infinity, alignment: .leading).lineLimit(1).font(.system(size: 17))
+            Text(notificationData.Test_2).frame(maxWidth: .infinity, alignment: .leading).lineLimit(1).font(.system(size: 17))
         }
         .listRowBackground(Color.backgroundColorList)
         .foregroundColor(Color.textColorSecondary)
