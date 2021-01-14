@@ -29,8 +29,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        // UNUserNotificationCenter.current().delegate = self
         // Override point for customization after application launch.
         //registerForPushNotifications()
-        
-        
+        /*
+        Keep app active while in use
+        */
+        UIApplication.shared.isIdleTimerDisabled = true
         
         // Use Firebase library to configure APIs
         FirebaseApp.configure()
